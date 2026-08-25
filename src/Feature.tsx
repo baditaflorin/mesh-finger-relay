@@ -3,7 +3,6 @@ import {
   ConfettiLayer,
   createClockSync,
   useEventLog,
-  useFairRng,
   useFlashOnChange,
   useGesture,
   useMeshSlot,
@@ -46,7 +45,6 @@ function Body({ room, config }: { room: YRoom; config: MeshConfig }) {
   const { name, setName, myName, nameOf } = useNamedPeer(config, room);
   const clock = useMemo(() => createClockSync(room.provider), [room]);
   useEffect(() => () => clock.destroy(), [clock]);
-  useFairRng(room, "finger-salts");
   const phase = usePhase<"lobby" | "painting">(room, "phase", "lobby");
   const slot = useMeshSlot(clock, SLOT_MS);
   const turn = useRotatingTurn(room, clock, { slotMs: SLOT_MS, order: "shuffle" });
